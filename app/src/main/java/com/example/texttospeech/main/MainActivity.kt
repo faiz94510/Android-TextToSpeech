@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
     private lateinit var binding : ActivityMainBinding
 
     private lateinit var textToSpeech: TextToSpeech
-    private lateinit var words: List<String>
-    private var currentWordIndex = 0
+    private lateinit var sentences: List<String>
+    private var currentSentenceIndex = 0
     companion object {
         private const val READ_EXTERNAL_STORAGE_PERMISSION_CODE = 1
         private const val FILE_PICKER_REQUEST_CODE = 123
@@ -63,68 +63,58 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
         }
 
     }
-    private fun loadPDFTextFromAssets( file : String): String {
+    private fun loadPDFTextFromAssets( file : String): List<String>{
+        val textSegments = mutableListOf<String>()
         val reader = PdfReader(file)
         val pdfDocument = com.itextpdf.kernel.pdf.PdfDocument(reader)
         val numPages = pdfDocument.numberOfPages
-        val stringBuilder = StringBuilder()
 
         for (i in 1..numPages) {
             val pageText = PdfTextExtractor.getTextFromPage(pdfDocument.getPage(i))
-            // Membersihkan teks
-            val cleanText = cleanText(pageText)
-            // Memisahkan teks menjadi kalimat atau paragraf
-            val separatedText = separateText(cleanText)
-            stringBuilder.append(separatedText)
+            val sentencesInPage = pageText.split("[.!?]\\s*".toRegex())
+            textSegments.addAll(sentencesInPage)
         }
 
         pdfDocument.close()
         reader.close()
 
-        return stringBuilder.toString()
+        return textSegments
     }
-    private fun cleanText(text: String): String {
-        // Hilangkan karakter khusus seperti tanda baca yang tidak diinginkan
-        var cleanedText = text.replace(Regex("[^A-Za-z0-9.,!?\\s]"), "")
-        // Hilangkan format yang tidak diinginkan
-        cleanedText = cleanedText.replace(Regex("\\s+"), " ")
-        return cleanedText
-    }
-
-    private fun separateText(text: String): String {
-        // Pisahkan teks menjadi kalimat menggunakan tanda baca "." dan "?"
-        val sentences = text.split(Regex("(?<=[.!?])\\s+"))
-        // Gabungkan kembali kalimat yang dipisahkan dengan tanda baca
-        val separatedText = sentences.joinToString("\n")
-        return separatedText
-    }
-
-    private fun startTextToSpeech() {
-        if (currentWordIndex < words.size) {
-            highlightCurrentWord()
-            // Speak the next word
-            speakWord(words[currentWordIndex])
+    private fun speakNextSentence() {
+        if (currentSentenceIndex < sentences.size) {
+            val params = Bundle()
+            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "")
+            textToSpeech.speak(sentences[currentSentenceIndex], TextToSpeech.QUEUE_FLUSH, params, "UniqueUtteranceId")
         }
     }
 
-    private fun speakWord(word: String) {
-        val params = Bundle()
-        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "")
-        textToSpeech.speak(word, TextToSpeech.QUEUE_FLUSH, params, "UniqueUtteranceId")
-        textToSpeech.setOnUtteranceCompletedListener(ttsListener)
-    }
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            val result = textToSpeech.setLanguage(Locale("id", "ID"))
+            val result = textToSpeech.setLanguage(Locale("id", "ID")) // Ubah ke bahasa yang diinginkan
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                // Language not supported
+                Log.e("MainActivity", "Language not supported")
             } else {
+                textToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {}
+
+                    override fun onDone(utteranceId: String?) {
+                        // Move to the next sentence after the current sentence is spoken
+                        currentSentenceIndex++
+                        if (currentSentenceIndex < sentences.size) {
+                            // Speak the next sentence
+                            speakNextSentence()
+                        }
+                    }
+
+                    override fun onError(utteranceId: String?) {}
+                })
+
                 // Start TTS process when initialization is done
-                startTextToSpeech()
+                speakNextSentence()
             }
         } else {
-            // TTS initialization failed
+            Log.e("MainActivity", "TextToSpeech initialization failed")
         }
     }
 
@@ -135,36 +125,36 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
         textToSpeech.shutdown()
         super.onDestroy()
     }
-    private fun highlightCurrentWord() {
-        if (currentWordIndex < words.size) {
-            val start = binding.textView.text.toString().indexOf(words[currentWordIndex])
-            if (start != -1) {
-                val end = start + words[currentWordIndex].length
-                val spannable = SpannableString(binding.textView.text.toString())
-                spannable.setSpan(
-                    BackgroundColorSpan(Color.YELLOW),
-                    start,
-                    end,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-                binding.textView.text = spannable
-            }
-        }
-    }
-    private val ttsListener = object : TextToSpeech.OnUtteranceCompletedListener {
-        override fun onUtteranceCompleted(utteranceId: String?) {
-            runOnUiThread {
-                // Move to the next word after the current word is spoken
-                currentWordIndex++
-                if (currentWordIndex < words.size) {
-                    // Highlight the next word
-                    highlightCurrentWord()
-                    // Speak the next word
-                    speakWord(words[currentWordIndex])
-                }
-            }
-        }
-    }
+//    private fun highlightCurrentWord() {
+//        if (currentWordIndex < words.size) {
+//            val start = binding.textView.text.toString().indexOf(words[currentWordIndex])
+//            if (start != -1) {
+//                val end = start + words[currentWordIndex].length
+//                val spannable = SpannableString(binding.textView.text.toString())
+//                spannable.setSpan(
+//                    BackgroundColorSpan(Color.YELLOW),
+//                    start,
+//                    end,
+//                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//                )
+//                binding.textView.text = spannable
+//            }
+//        }
+//    }
+//    private val ttsListener = object : TextToSpeech.OnUtteranceCompletedListener {
+//        override fun onUtteranceCompleted(utteranceId: String?) {
+//            runOnUiThread {
+//                // Move to the next word after the current word is spoken
+//                currentWordIndex++
+//                if (currentWordIndex < words.size) {
+//                    // Highlight the next word
+//                    highlightCurrentWord()
+//                    // Speak the next word
+//                    speakWord(words[currentWordIndex])
+//                }
+//            }
+//        }
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -176,15 +166,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
                     val path = RealPathUtil.getRealPath(this, uri!!)
                     val file = File(path)
 
-                    // Extract text from PDF using iText
-                    val text = loadPDFTextFromAssets(file.toString())
-                    binding.textView.text = text
-                    // Split text into words
-                    words = text.split("\\s+".toRegex())
-
-                    // Initialize Text-to-Speech
                     textToSpeech = TextToSpeech(this, this)
-                    startTextToSpeech()
+                    // Extract text from PDF using iText
+                     sentences = loadPDFTextFromAssets(file.toString())
+                    binding.textView.text = sentences.toString()
+                    // Split text into words
+                    // Clean and separate text
+                    // Initialize Text-to-Speech
+
+                    speakNextSentence()
                 }
             }
         }
