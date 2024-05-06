@@ -19,14 +19,21 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.BackgroundColorSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.texttospeech.databinding.ActivityMainBinding
 import com.example.texttospeech.getpath.RealPathUtil
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 import java.io.File
 import java.util.Locale
@@ -82,6 +89,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
     }
     private fun speakNextSentence() {
         if (currentSentenceIndex < sentences.size) {
+            highlightCurrentSentence()
+
             val params = Bundle()
             params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "")
             textToSpeech.speak(sentences[currentSentenceIndex], TextToSpeech.QUEUE_FLUSH, params, "UniqueUtteranceId")
@@ -117,8 +126,35 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
             Log.e("MainActivity", "TextToSpeech initialization failed")
         }
     }
+    private fun highlightCurrentSentence() {
+        val sentence = sentences.getOrNull(currentSentenceIndex)
+        sentence?.let {
+            CoroutineScope(Dispatchers.Main).launch {
+                binding.textView.text = sentences.joinToString("\n") { it }
+                highlightSentence(currentSentenceIndex)
+            }
+        }
+    }
+
+    private suspend fun highlightSentence(index: Int) {
+        val spannableString = SpannableStringBuilder(binding.textView.text)
+        val originalColor = binding.textView.currentTextColor
+        val highlightedColor = resources.getColor(android.R.color.holo_orange_light, null)
+
+        // Set text color for each sentence
+        for (i in sentences.indices) {
+            val color = if (i == index) highlightedColor else originalColor
+            val start = binding.textView.text.toString().indexOf(sentences[i])
+            val end = start + sentences[i].length
+            spannableString.setSpan(ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        binding.textView.text = spannableString
+        delay(1000)
+    }
 
     override fun onDestroy() {
+
         if (textToSpeech.isSpeaking) {
             textToSpeech.stop()
         }
