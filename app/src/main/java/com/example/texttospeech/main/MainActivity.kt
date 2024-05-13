@@ -1,13 +1,7 @@
 package com.example.texttospeech.main
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.pdf.PdfDocument
-import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -18,25 +12,32 @@ import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.text.Spannable
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.BackgroundColorSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Room
 import com.example.texttospeech.databinding.ActivityMainBinding
-import com.example.texttospeech.getpath.RealPathUtil
+import com.example.texttospeech.room.database.AppDatabase
+import com.example.texttospeech.room.entity.User
+import com.example.texttospeech.room.provider.DatabaseProvider
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import java.io.File
 import java.util.Locale
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
         private const val FILE_PICKER_REQUEST_CODE = 123
     }
     var getText : String = ""
+    private lateinit var db: AppDatabase
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,14 +60,36 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
 
         // Process text (remove special characters, split into words, etc.)
 
+        // Inisialisasi database
+//        val db = Room.databaseBuilder(
+//            applicationContext,
+//            AppDatabase::class.java, "faiznazhir"
+//        ).fallbackToDestructiveMigration()
+//            .build()
+
+        // Sekarang Anda bisa menggunakan db untuk melakukan operasi database
 
 
         // Start TTS process
 
-        binding.btn.setOnClickListener {
-
-        }
+//        binding.btn.setOnClickListener {
+//            val userInsert = User(firstName = "faiz", lastName = "nazhir")
+//
+//            CoroutineScope(Dispatchers.Main).launch {
+//                withContext(Dispatchers.IO) {
+//                    db.userDao().insertAll(userInsert)
+//                }
+//
+//                // Setelah operasi insert selesai, menampilkan pesan
+//                Toast.makeText(this@MainActivity, "Data terinput", Toast.LENGTH_SHORT).show()
+//            }
+//        }
         binding.picker.setOnClickListener {
+
+            GlobalScope.launch(Dispatchers.IO){
+                val getData = db.userDao().getAll()
+                Log.d("faiznazhi", getData.toString())
+            }
 
             checkStoragePermission()
         }
@@ -199,12 +224,12 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener{
             if (uri != null){
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
                     uri = data?.data!!
-                    val path = RealPathUtil.getRealPath(this, uri!!)
-                    val file = File(path)
+//                    val path = RealPathUtil.getRealPath(this, uri!!)
+//                    val file = File(path)
 
                     textToSpeech = TextToSpeech(this, this)
                     // Extract text from PDF using iText
-                     sentences = loadPDFTextFromAssets(file.toString())
+//                     sentences = loadPDFTextFromAssets(file.toString())
                     binding.textView.text = sentences.toString()
                     // Split text into words
                     // Clean and separate text

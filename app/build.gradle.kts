@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -14,6 +15,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -72,8 +74,17 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("com.itextpdf:itext7-core:7.1.15")
-//    implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
+    //pdf
+    implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
+    //epub
     implementation("org.apache.opennlp:opennlp-tools:1.9.3")
+
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
+    implementation("com.github.yukuku:ambilwarna:2.0.1")
+    val multidex_version = "2.0.1"
+    implementation("androidx.multidex:multidex:$multidex_version")
 
 
 }

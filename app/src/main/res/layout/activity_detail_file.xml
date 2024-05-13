@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main.DetailFile">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/primay"
+        android:layout_height="55dp">
+        <ImageView
+            android:id="@+id/backActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_back_activity"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/lato_medium"
+            android:text="Detail E-Book"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.github.barteksc.pdfviewer.PDFView
+                android:id="@+id/pdfView"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Judul E-Book"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/title_edit_text"/>
+                <TextView
+                    android:id="@+id/judul"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Judul E-Book"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lato_medium"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deskripsi E-Book"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/title_edit_text"/>
+                <TextView
+                    android:id="@+id/deskripsi"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Judul E-Book"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lato_medium"
+                    android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+                    <Button
+                        android:id="@+id/btnBuka"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/bg_btn_border"
+                        android:text="Buka"
+                        android:textColor="@color/primay"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:layout_marginEnd="10dp"
+                        android:textAllCaps="false"/>
+                    <Button
+                        android:id="@+id/btnTextSpeech"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="5"
+                        android:background="@drawable/bg_btn"
+                        android:text="Text To Speech"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/lato_bold"
+                        android:textAllCaps="false"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Text To Speech</string>
+    <string-array name="pilih_bahasa">
+        <item>Inggris</item>
+        <item>Indonesia</item>
+        <item>Jawa</item>
+        <item>Sunda</item>
+    </string-array>
 </resources>

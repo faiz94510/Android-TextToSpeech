@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".main.MainActivity">
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:id="@+id/btn"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:text="Pilih"
+        android:text="Pilih File"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_btn"
         android:id="@+id/picker"/>
 
     <TextView
@@ -21,6 +21,8 @@
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:justificationMode="inter_word"
         android:textIsSelectable="true"
         android:padding="16dp"
         android:textSize="16sp"/>

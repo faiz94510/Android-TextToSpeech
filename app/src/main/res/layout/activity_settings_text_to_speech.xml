@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/parent"
+    tools:context=".main.SettingsTextToSpeech">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/primay"
+        android:layout_height="55dp">
+        <ImageView
+            android:id="@+id/backActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_back_activity"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/titleActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/lato_medium"
+            android:text="Pengaturan Text To Speech"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Warna Text"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/viewWarnaText"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:backgroundTint="@color/primay"
+                android:layout_toStartOf="@id/btnUbahWarnaText"
+                android:background="@drawable/bg_color_view"/>
+            <TextView
+                android:layout_marginStart="10dp"
+                android:id="@+id/btnUbahWarnaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubah"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@color/primay"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Warna Hilight"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/viewWarnaHilight"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:backgroundTint="@color/primay"
+                android:layout_toStartOf="@id/btnUbahWarnaHilight"
+                android:background="@drawable/bg_color_view"/>
+            <TextView
+                android:layout_marginStart="10dp"
+                android:id="@+id/btnUbahWarnaHilight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubah"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@color/primay"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Bahasa Suara"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
+        <Spinner
+            android:id="@+id/spinnerPilihBahasa"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/bg_edit_text"
+            android:entries="@array/pilih_bahasa"/>
+    </LinearLayout>
+
+</LinearLayout>
