@@ -18,6 +18,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivityTextToSpeechBinding
+import com.example.texttospeech.extracttext.ExtractText
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
 import kotlinx.coroutines.CoroutineScope
@@ -45,10 +46,14 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
         getDatasharedPreferences()
 
         val getFilePath = intent.getStringExtra("file_path")?:""
-        // Extract text from PDF using iText
-        sentences = loadPDFTextFromAssets(getFilePath)
-        speakNextSentence()
-
+        val getExtension = getFilePath.substringAfterLast(".")
+        if (getExtension.equals("pdf")){
+            sentences = ExtractText.loadPDFTextFromAssets(getFilePath)
+            speakNextSentence()
+        }else{
+            sentences = ExtractText.loadEpubTextFromFile(getFilePath)
+            speakNextSentence()
+        }
 
         binding.btnForward.setOnClickListener {
             currentSentenceIndex++
@@ -106,23 +111,7 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
-    private fun loadPDFTextFromAssets( file : String): List<String>{
-        val textSegments = mutableListOf<String>()
-        val reader = PdfReader(file)
-        val pdfDocument = com.itextpdf.kernel.pdf.PdfDocument(reader)
-        val numPages = pdfDocument.numberOfPages
 
-        for (i in 1..numPages) {
-            val pageText = PdfTextExtractor.getTextFromPage(pdfDocument.getPage(i))
-            val sentencesInPage = pageText.split("[.!?]\\s*".toRegex())
-            textSegments.addAll(sentencesInPage)
-        }
-
-        pdfDocument.close()
-        reader.close()
-
-        return textSegments
-    }
     private fun speakNextSentence() {
         if (currentSentenceIndex < sentences.size) {
             highlightCurrentSentence()

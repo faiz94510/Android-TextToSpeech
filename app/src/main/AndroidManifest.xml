@@ -49,7 +49,7 @@
             android:name=".main.ReadPdf"
             android:exported="false" />
         <activity
-            android:name=".main.AddFile"
+            android:name=".main.ReadEpub"
             android:exported="false" />
         <activity
             android:name=".main.MainActivity"

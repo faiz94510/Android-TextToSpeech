@@ -35,9 +35,7 @@ class FileList : AppCompatActivity() {
         setContentView(binding.root)
         dataList = ArrayList<DataListFile>()
         originalDataList = ArrayList(dataList)
-
-
-
+        adapter = AdapterListFile(this@FileList, dataList)
 
         db = DatabaseProvider.getDatabase(this)
 
@@ -97,7 +95,7 @@ class FileList : AppCompatActivity() {
             val spacingDalamPiksel = resources.getDimensionPixelSize(R.dimen.grid_layout_spacing)
             binding.recyclerView.addItemDecoration(GridSpacingItemDecoration(spacingDalamPiksel, 3))
             binding.recyclerView.layoutManager = layoutManager
-            adapter = AdapterListFile(this@FileList, dataList)
+
             binding.recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
         }

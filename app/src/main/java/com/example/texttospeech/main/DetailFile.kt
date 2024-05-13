@@ -40,9 +40,16 @@ class DetailFile : AppCompatActivity() {
     }
 
     private fun intentRead(){
-        val intent = Intent(this, ReadPdf::class.java)
-        intent.putExtra("file_path", getFilePath)
-        startActivity(intent)
+        if (getFilePath.substringAfterLast(".").equals("pdf")){
+            val intent = Intent(this, ReadPdf::class.java)
+            intent.putExtra("file_path", getFilePath)
+            startActivity(intent)
+        }else{
+            val intent = Intent(this, ReadEpub::class.java)
+            intent.putExtra("file_path", getFilePath)
+            startActivity(intent)
+        }
+
     }
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -89,8 +96,16 @@ class DetailFile : AppCompatActivity() {
         binding.judul.text = getJudul
         binding.deskripsi.text = getDeskripsi
 
-        binding.pdfView.fromFile(File(getFilePath))
-            .defaultPage(0)
-            .load()
+        if (getFilePath.substringAfterLast(".").equals("pdf")){
+            val pdfRendererHelper = PdfRendererHelper(this)
+            // Buka file PDF
+            val pdfRenderer = pdfRendererHelper.openPdf(File(getFilePath))
+            pdfRendererHelper.displayPage(0, binding.imageCover)
+            pdfRendererHelper.closePdf()
+        }else{
+            binding.imageCover.setImageResource(R.drawable.ic_logo)
+        }
+
+
     }
 }

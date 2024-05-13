@@ -37,8 +37,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.github.barteksc.pdfviewer.PDFView
-                android:id="@+id/pdfView"
+            <ImageView
+                android:id="@+id/imageCover"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"/>
             <LinearLayout

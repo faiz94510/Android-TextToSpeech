@@ -47,24 +47,27 @@ class AdapterListFile(val context: Context, val dataList : ArrayList<DataListFil
     inner class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val titleFile: TextView = itemView.findViewById(R.id.titleFile)
         val parent: CardView = itemView.findViewById(R.id.parent)
-        val imagePdf: ImageView = itemView.findViewById(R.id.imagePdf)
+        val imageCover: ImageView = itemView.findViewById(R.id.imageCover)
 
         fun bind(item: DataListFile) {
             titleFile.text = item.judul
 
             val file = File(item.path_file)
+
             Log.d("faiz nazhir amrulloh0", item.path_file)
-            val pdfRendererHelper = PdfRendererHelper(context)
-            // Buka file PDF
-            val pdfRenderer = pdfRendererHelper.openPdf(file)
+            if (item.path_file.substringAfterLast(".").equals("pdf")){
+                val pdfRendererHelper = PdfRendererHelper(context)
+                // Buka file PDF
+                val pdfRenderer = pdfRendererHelper.openPdf(file)
+                pdfRendererHelper.displayPage(0, imageCover)
+                pdfRendererHelper.closePdf()
+            }else{
+                imageCover.setImageResource(R.drawable.ic_logo)
+            }
 
 
-            pdfRendererHelper.displayPage(0, imagePdf)
-            pdfRendererHelper.closePdf()
 
-
-
-            imagePdf.setOnClickListener {
+            imageCover.setOnClickListener {
                     val intent = Intent(context, DetailFile::class.java)
                     intent.putExtra("file_path", item.path_file)
                     intent.putExtra("judul", item.judul)

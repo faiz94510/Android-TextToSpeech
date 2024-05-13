@@ -85,6 +85,7 @@ dependencies {
     implementation("com.github.yukuku:ambilwarna:2.0.1")
     val multidex_version = "2.0.1"
     implementation("androidx.multidex:multidex:$multidex_version")
+    implementation("com.github.mertakdut:EpubParser:1.0.95")
 
 
 }

@@ -14,4 +14,7 @@
     <color name="upload_file">#FF8A00</color>
     <color name="title_edit_text">#A4A4A4</color>
     <color name="hilight_yellow">#FDFA13</color>
+    <color name="colorPrimary">#C6CBCF</color>
+    <color name="colorPrimaryDark">#03111a</color>
+    <color name="colorAccent">#007934</color>
 </resources>
