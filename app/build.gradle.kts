@@ -87,5 +87,12 @@ dependencies {
     implementation("androidx.multidex:multidex:$multidex_version")
     implementation("com.github.mertakdut:EpubParser:1.0.95")
 
-
+    //slider
+    implementation("com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2")
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    //fan
+    //fan
+    implementation("com.amitshekhar.android:android-networking:1.0.2")
 }

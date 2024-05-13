@@ -17,9 +17,6 @@ class ReadPdf : AppCompatActivity() {
     private lateinit var binding: ActivityReadPdfBinding
 
     var getPathFile : String = ""
-    companion object {
-        private const val READ_EXTERNAL_STORAGE_PERMISSION_CODE = 1
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReadPdfBinding.inflate(layoutInflater)
@@ -32,15 +29,14 @@ class ReadPdf : AppCompatActivity() {
     }
 
     private fun displayFromFile(file: File) {
-
-//        binding.pdfView.fromFile(file)
-//            .defaultPage(0)
-//            .enableSwipe(true)
-//            .swipeHorizontal(false)
-//            .enableDoubletap(true)
-//            .enableAnnotationRendering(false)
-//            .password(null)
-//            .scrollHandle(null)
-//            .load()
+        binding.pdfView.fromFile(file)
+            .defaultPage(0)
+            .enableSwipe(true)
+            .swipeHorizontal(false)
+            .enableDoubletap(true)
+            .enableAnnotationRendering(false)
+            .password(null)
+            .scrollHandle(null)
+            .load()
     }
 }

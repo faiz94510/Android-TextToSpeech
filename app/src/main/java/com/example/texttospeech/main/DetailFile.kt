@@ -11,13 +11,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivityDetailFileBinding
+import com.example.texttospeech.room.database.AppDatabase
+import com.example.texttospeech.room.provider.DatabaseProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
+import java.sql.Date
 
 class DetailFile : AppCompatActivity() {
     private lateinit var binding : ActivityDetailFileBinding
     var getFilePath : String = ""
     var getJudul : String = ""
     var getDeskripsi : String = ""
+    private lateinit var db: AppDatabase
     companion object {
         private const val READ_EXTERNAL_STORAGE_PERMISSION_CODE = 1
     }
@@ -25,6 +33,13 @@ class DetailFile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailFileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = DatabaseProvider.getDatabase(this)
+        val getId = intent.getStringExtra("id")?:""
+
+        CoroutineScope(Dispatchers.Main).launch {
+            updateLastSeen(getId.toInt())
+        }
+
 
         loadData()
 
@@ -38,7 +53,12 @@ class DetailFile : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
+    suspend fun updateLastSeen(id : Int){
+        val currentDate = Date(System.currentTimeMillis())
+        withContext(Dispatchers.IO) {
+            db.fileDao().updateLastSeen(updateAt = currentDate, idFile = id)
+        }
+    }
     private fun intentRead(){
         if (getFilePath.substringAfterLast(".").equals("pdf")){
             val intent = Intent(this, ReadPdf::class.java)

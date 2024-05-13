@@ -5,10 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".main.FileList">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/primay"
+        android:layout_height="55dp">
+        <ImageView
+            android:id="@+id/backActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_back_activity"
+            app:tint="@color/white" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/lato_medium"
+            android:text="Daftar E-Book"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
     <EditText
+        android:layout_margin="20dp"
         android:id="@+id/edSearch"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -25,7 +46,8 @@
         android:background="@drawable/bg_edit_text"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"/>

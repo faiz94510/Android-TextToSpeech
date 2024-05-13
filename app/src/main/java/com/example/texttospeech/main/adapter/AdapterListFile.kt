@@ -72,6 +72,7 @@ class AdapterListFile(val context: Context, val dataList : ArrayList<DataListFil
                     intent.putExtra("file_path", item.path_file)
                     intent.putExtra("judul", item.judul)
                     intent.putExtra("deskripsi", item.deskripsi)
+                    intent.putExtra("id", item.id)
                     context.startActivity(intent)
                 }
                 parent.setOnClickListener {
@@ -79,6 +80,7 @@ class AdapterListFile(val context: Context, val dataList : ArrayList<DataListFil
                     intent.putExtra("file_path", item.path_file)
                     intent.putExtra("judul", item.judul)
                     intent.putExtra("deskripsi", item.deskripsi)
+                    intent.putExtra("id", item.id)
                     context.startActivity(intent)
                 }
         }

@@ -43,7 +43,6 @@
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:justificationMode="inter_word"
-                android:layout_margin="20dp"
                 android:id="@+id/textDisplay"/>
         </RelativeLayout>
     </ScrollView>
@@ -52,7 +51,6 @@
 
     <androidx.cardview.widget.CardView
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
         app:cardBackgroundColor="@color/white"
         android:layout_height="wrap_content">
