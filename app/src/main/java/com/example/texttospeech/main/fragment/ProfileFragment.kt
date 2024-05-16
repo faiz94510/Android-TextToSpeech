@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.FragmentProfileBinding
 import com.example.texttospeech.main.Login
+import com.example.texttospeech.main.MainActivity
+import com.example.texttospeech.main.Register
 import com.example.texttospeech.room.database.AppDatabase
 import com.example.texttospeech.room.provider.DatabaseProvider
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +33,8 @@ class ProfileFragment : Fragment() {
         getDataProfile()
         getDataFromDb()
 
+        checkLogin()
+
         binding.btnKeluar.setOnClickListener {
             val intent = Intent(activity, Login::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -42,7 +46,28 @@ class ProfileFragment : Fragment() {
             editor?.apply()
         }
 
+        binding.btnDaftar.setOnClickListener {
+            val intent = Intent(activity, Register::class.java)
+            startActivity(intent)
+        }
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(activity, Login::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
+    }
+
+    private fun checkLogin(){
+        val sharedPreference =  activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val getIdUser = sharedPreference?.getString("id_user","") ?: ""
+        if (getIdUser.isNotEmpty()){
+            binding.parentAccountAvailable.visibility = View.VISIBLE
+            binding.parentLoginRegister.visibility = View.GONE
+        }else{
+            binding.parentAccountAvailable.visibility = View.GONE
+            binding.parentLoginRegister.visibility = View.VISIBLE
+        }
     }
 
     private fun getDataFromDb(){

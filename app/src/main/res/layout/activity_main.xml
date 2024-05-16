@@ -23,5 +23,17 @@
         app:itemTextColor="@color/tab_text_foreground"
         android:background="@color/white"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnTambahBuku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:elevation="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_add"
+        android:tint="@color/white"
+        android:backgroundTint="@color/primay"/>
+
 
 </RelativeLayout>

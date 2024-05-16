@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivitySettingsTextToSpeechBinding
+import com.example.texttospeech.statusbar.StatusBarColor
 import yuku.ambilwarna.AmbilWarnaDialog
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener
 
@@ -26,6 +27,7 @@ class SettingsTextToSpeech : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        StatusBarColor().InitializationBarColorWithoutStatusBar(this)
         getFilePath = intent.getStringExtra("file_path")?:""
         getDatasharedPreferences()
 
@@ -77,6 +79,9 @@ class SettingsTextToSpeech : AppCompatActivity() {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
+        }
+        binding.backActivity.setOnClickListener {
+            onBackPressed()
         }
     }
 

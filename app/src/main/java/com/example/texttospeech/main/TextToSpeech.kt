@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivityTextToSpeechBinding
 import com.example.texttospeech.extracttext.ExtractText
+import com.example.texttospeech.statusbar.StatusBarColor
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
 import kotlinx.coroutines.CoroutineScope
@@ -42,6 +43,7 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
         super.onCreate(savedInstanceState)
         binding = ActivityTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        StatusBarColor().InitializationBarColorWithoutStatusBar(this)
         textToSpeech = TextToSpeech(this, this)
         getDatasharedPreferences()
 
@@ -49,6 +51,9 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
         val getExtension = getFilePath.substringAfterLast(".")
         if (getExtension.equals("pdf")){
             sentences = ExtractText.loadPDFTextFromAssets(getFilePath)
+            speakNextSentence()
+        }else if (getExtension.equals("txt")){
+            sentences = ExtractText.loadTxtTextFromFile(getFilePath)
             speakNextSentence()
         }else{
             sentences = ExtractText.loadEpubTextFromFile(getFilePath)

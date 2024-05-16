@@ -1,10 +1,14 @@
 package com.example.texttospeech.extracttext
 
+import android.content.Context
 import com.github.mertakdut.BookSection
 import com.github.mertakdut.Reader
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
+import java.io.BufferedReader
+import java.io.File
 import java.io.IOException
+import java.io.InputStreamReader
 
 object ExtractText {
     fun loadPDFTextFromAssets( file : String): List<String>{
@@ -63,6 +67,30 @@ object ExtractText {
             e.printStackTrace()
         }
 
+        return textSegments
+    }
+
+    fun loadTxtTextFromFile(filePath: String): List<String> {
+        val textSegments = mutableListOf<String>()
+        try {
+            val file = File(filePath)
+            if (file.exists()) {
+                val reader = BufferedReader(InputStreamReader(file.inputStream()))
+                val stringBuilder = StringBuilder()
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    stringBuilder.append(line).append("\n")
+                }
+                // Remove unwanted symbols using regex
+                val cleanedText = stringBuilder.toString().replace("[^A-Za-z0-9.!?\\s]".toRegex(), "")
+                // Split the text into segments using regex
+                textSegments.addAll(cleanedText.split("[.!?]\\s*".toRegex()))
+            } else {
+                throw IllegalArgumentException("File not found at path: $filePath")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         return textSegments
     }
 }

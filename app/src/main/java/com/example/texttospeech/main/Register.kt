@@ -13,6 +13,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.example.sistempemesananserviskomputer.api.urlAPI
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivityRegisterBinding
+import com.example.texttospeech.statusbar.StatusBarColor
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -22,6 +23,7 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        StatusBarColor().InitializationBarColorWithoutStatusBarWhite(this)
 
         binding.btnDaftar.setOnClickListener {
             if (binding.edNamaPengguna.text.toString().trim().isEmpty()){
@@ -35,7 +37,7 @@ class Register : AppCompatActivity() {
             } else if (binding.edPassword.text.toString().trim() != binding.edKonfirmasiPassword.text.toString().trim()){
                 Toast.makeText(this, "Konfirmasi password tidak sama", Toast.LENGTH_SHORT).show()
             }else{
-                binding.btnMasuk.visibility = View.INVISIBLE
+                binding.btnDaftar.visibility = View.INVISIBLE
                 binding.progressBar.visibility = View.VISIBLE
                 register()
             }
@@ -45,6 +47,18 @@ class Register : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.backActivity.setOnClickListener {
+            onBackPressed()
+        }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
     private fun register(){
@@ -66,7 +80,7 @@ class Register : AppCompatActivity() {
                 override fun onResponse(response: JSONObject) {
                     try {
                         if (response.getString("success").equals("true")){
-                            binding.btnMasuk.visibility = View.VISIBLE
+                            binding.btnDaftar.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.INVISIBLE
 
                             val intent = Intent(this@Register,Login::class.java)
@@ -75,13 +89,13 @@ class Register : AppCompatActivity() {
                             finish()
                         }else{
                             Toast.makeText(this@Register, response.getString("message"), Toast.LENGTH_SHORT).show()
-                            binding.btnMasuk.visibility = View.VISIBLE
+                            binding.btnDaftar.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.INVISIBLE
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
                         Toast.makeText(this@Register, e.message, Toast.LENGTH_SHORT).show()
-                        binding.btnMasuk.visibility = View.VISIBLE
+                        binding.btnDaftar.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.INVISIBLE
                     }
                 }
@@ -89,7 +103,7 @@ class Register : AppCompatActivity() {
                     val getError = JSONObject(error.errorBody)
                     val message = getError.getString("message")
                     Toast.makeText(this@Register, message, Toast.LENGTH_SHORT).show()
-                    binding.btnMasuk.visibility = View.VISIBLE
+                    binding.btnDaftar.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.INVISIBLE
                 }
             })

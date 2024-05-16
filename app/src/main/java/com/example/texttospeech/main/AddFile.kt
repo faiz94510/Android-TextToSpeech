@@ -21,9 +21,11 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivityAddFileBinding
 import com.example.texttospeech.room.database.AppDatabase
 import com.example.texttospeech.room.provider.DatabaseProvider
+import com.example.texttospeech.statusbar.StatusBarColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,6 +51,7 @@ class AddFile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddFileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        StatusBarColor().InitializationBarColorWithoutStatusBar(this)
 
         db = DatabaseProvider.getDatabase(this)
 
@@ -57,11 +60,22 @@ class AddFile : AppCompatActivity() {
         }
 
         binding.btnTambahkan.setOnClickListener {
-            binding.btnTambahkan.visibility = View.INVISIBLE
-            binding.progressBar.visibility = View.VISIBLE
-            Handler().postDelayed({
-               addFile()
-            },500)
+            if (binding.edJudul.text.toString().trim().isEmpty()){
+                Toast.makeText(this, "Judul E-Book tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }else if (binding.edDeskripsi.text.toString().trim().isEmpty()){
+                Toast.makeText(this, "Judul E-Book tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }else if (getPathFile.isEmpty()){
+                Toast.makeText(this, "Anda belum menggunggah berkas", Toast.LENGTH_SHORT).show()
+            }else{
+                binding.btnTambahkan.visibility = View.INVISIBLE
+                binding.progressBar.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    addFile()
+                },500)
+            }
+        }
+        binding.backActivity.setOnClickListener {
+            onBackPressed()
         }
 
     }
@@ -91,19 +105,18 @@ class AddFile : AppCompatActivity() {
                     val getNameFilePath = getNameFilePathFromUri(this, uri)
                     val copiedFilePath = copyFileFromUri(this, uri)
                     if (copiedFilePath != null) {
-                        // File telah berhasil disalin, Anda dapat menggunakan copiedFilePath untuk membuka file
-                        Log.d("faiz nazhir aaaa", uri.toString())
-
-//                    val path = getRealPath.getRealPathFromUri(this, uri)
-//                        val path = getPathFromUri(this, uri)
-//                        val file = File(path)
-                        Log.d("faiz nazhir aaaa", copiedFilePath.toString())
-
                         val getNameFile = getNameFilePath.toString().substringAfterLast("/")
                         getPathFile = copiedFilePath.toString()
                         binding.parentPratinjau.visibility = View.VISIBLE
                         binding.textPdf.text = getNameFile
                         binding.btnUnggah.setText("Ganti berkas")
+                        if (getNameFile.substringAfterLast(".").equals("pdf")){
+                            binding.logoPreview.setImageResource(R.drawable.ic_pdf)
+                        }else if (getNameFile.substringAfterLast(".").equals("txt")){
+                            binding.logoPreview.setImageResource(R.drawable.notepad_logo)
+                        }else{
+                            binding.logoPreview.setImageResource(R.drawable.ic_logo)
+                        }
                     } else {
                         // Terjadi kesalahan saat menyalin file, tangani dengan sesuai
                         Toast.makeText(this, "Gagal menyalin file", Toast.LENGTH_SHORT).show()
@@ -222,7 +235,7 @@ class AddFile : AppCompatActivity() {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "*/*"
         }
-        val mimeTypes = arrayOf("application/pdf", "application/epub+zip")
+        val mimeTypes = arrayOf("application/pdf", "application/epub+zip", "text/plain")
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         startActivityForResult(intent, AddFile.FILE_PICKER_REQUEST_CODE)
     }

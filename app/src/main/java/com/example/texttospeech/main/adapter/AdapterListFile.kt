@@ -54,16 +54,18 @@ class AdapterListFile(val context: Context, val dataList : ArrayList<DataListFil
 
             val file = File(item.path_file)
 
-            Log.d("faiz nazhir amrulloh0", item.path_file)
             if (item.path_file.substringAfterLast(".").equals("pdf")){
                 val pdfRendererHelper = PdfRendererHelper(context)
                 // Buka file PDF
                 val pdfRenderer = pdfRendererHelper.openPdf(file)
                 pdfRendererHelper.displayPage(0, imageCover)
                 pdfRendererHelper.closePdf()
+            }else if(item.path_file.substringAfterLast(".").equals("txt")){
+                imageCover.setImageResource(R.drawable.notepad_logo)
             }else{
                 imageCover.setImageResource(R.drawable.ic_logo)
             }
+            Log.d("kalakaka", item.path_file)
 
 
 

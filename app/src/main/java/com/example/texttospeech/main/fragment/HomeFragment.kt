@@ -69,8 +69,14 @@ class HomeFragment : Fragment() {
     private fun getDataProfile(){
         val sharedPreference =  activity?.getSharedPreferences("user", Context.MODE_PRIVATE)
         val getNamaLengkap = sharedPreference?.getString("nama_lengkap","") ?: ""
-        binding.namaPengguna.text = getNamaLengkap
+        if (getNamaLengkap.isEmpty()){
+            binding.namaPengguna.text = "Halo, selamat datang"
+        }else{
+            binding.namaPengguna.text = getNamaLengkap
+        }
+
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchFileList(){

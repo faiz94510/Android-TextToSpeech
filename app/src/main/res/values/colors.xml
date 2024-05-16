@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primay">#2E417B</color>
+    <color name="primay">#05597e</color>
     <color name="stroke">#E8E8E8</color>
     <color name="bg_main">#F9F9F9</color>
     <color name="hint">#A6A6A6</color>
@@ -18,4 +18,5 @@
     <color name="colorPrimaryDark">#03111a</color>
     <color name="colorAccent">#007934</color>
     <color name="text_hint">#5E5E5E</color>
+    <color name="red_warning">#DE1135</color>
 </resources>

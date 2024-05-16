@@ -17,6 +17,7 @@ import com.example.texttospeech.main.adapter.GridSpacingItemDecoration
 import com.example.texttospeech.main.model.DataListFile
 import com.example.texttospeech.room.database.AppDatabase
 import com.example.texttospeech.room.provider.DatabaseProvider
+import com.example.texttospeech.statusbar.StatusBarColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,6 +34,7 @@ class FileList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFileListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        StatusBarColor().InitializationBarColorWithoutStatusBar(this)
         dataList = ArrayList<DataListFile>()
         originalDataList = ArrayList(dataList)
         adapter = AdapterListFile(this@FileList, dataList)
@@ -65,6 +67,9 @@ class FileList : AppCompatActivity() {
 
             }
         })
+        binding.backActivity.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 

@@ -35,6 +35,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".main.ReadTxt"
+            android:exported="false" />
+        <activity
             android:name=".main.MainActivity"
             android:exported="false" />
         <activity
@@ -45,6 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".main.AddFile"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".main.SettingsTextToSpeech"

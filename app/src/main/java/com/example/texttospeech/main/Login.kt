@@ -14,6 +14,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.example.sistempemesananserviskomputer.api.urlAPI
 import com.example.texttospeech.R
 import com.example.texttospeech.databinding.ActivityLoginBinding
+import com.example.texttospeech.statusbar.StatusBarColor
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -23,6 +24,7 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        StatusBarColor().InitializationBarColorWithoutStatusBarWhite(this)
 
 
         binding.btnMasuk.setOnClickListener {
@@ -39,7 +41,12 @@ class Login : AppCompatActivity() {
 
         binding.btnDaftar.setOnClickListener {
             val intent = Intent(this, Register::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
+            finish()
+        }
+        binding.backActivity.setOnClickListener {
+           onBackPressed()
         }
     }
 
@@ -103,5 +110,14 @@ class Login : AppCompatActivity() {
         val firstWord = words[0].take(1)
         val secondWord = if (words.size > 1) words[1].take(1) else ""
         return "$firstWord$secondWord"
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 }

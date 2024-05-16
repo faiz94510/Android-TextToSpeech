@@ -24,4 +24,7 @@ interface FileDao {
     @Query("UPDATE file SET update_at = :updateAt WHERE id = :idFile")
     fun updateLastSeen(updateAt : Date, idFile : Int)
 
+    @Query("DELETE FROM file WHERE id = :idFile")
+    fun deleteData(idFile : Int)
+
 }

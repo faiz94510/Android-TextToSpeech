@@ -27,6 +27,16 @@
             android:text="Detail E-Book"
             android:textColor="@color/white"
             android:textSize="18sp" />
+        <ImageButton
+            android:id="@+id/menuOVer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_overflow"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@null"
+            app:tint="@color/white" />
     </RelativeLayout>
     <androidx.cardview.widget.CardView
         android:layout_margin="20dp"
