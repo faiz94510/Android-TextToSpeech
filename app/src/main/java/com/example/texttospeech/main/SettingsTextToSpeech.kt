@@ -88,7 +88,9 @@ class SettingsTextToSpeech : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, TextToSpeech::class.java)
         intent.putExtra("file_path", getFilePath)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         super.onBackPressed()
     }
     private fun getDatasharedPreferences(){

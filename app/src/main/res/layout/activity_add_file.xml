@@ -30,133 +30,139 @@
             android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Judul E-Book"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
-        <EditText
-            android:id="@+id/edJudul"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/bg_edit_text"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hint"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:hint="Masukkan nama judul E-Book"
-            android:layout_marginTop="5dp"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Deskripsi E-Book"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
-        <EditText
-            android:id="@+id/edDeskripsi"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/bg_edit_text"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hint"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:hint="Masukkan nama judul E-Book"
-            android:layout_marginTop="5dp"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Unggah E-Book"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
-        <Button
-            android:id="@+id/btnUnggah"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_btn_border"
-            android:text="Unggah berkas"
-            android:textColor="@color/primay"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:drawableStart="@drawable/ic_upload"
-            android:drawableTint="@color/primay"
-            android:drawablePadding="5dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"/>
+        android:fillViewport="true"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/parentPratinjau"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pratinjau"
+                android:text="Judul E-Book"
                 android:fontFamily="@font/lato_regular"
                 android:textSize="12sp"
                 android:textColor="@color/black"/>
-            <LinearLayout
-                android:layout_marginTop="5dp"
+            <EditText
+                android:id="@+id/edJudul"
                 android:layout_width="match_parent"
-                android:gravity="center_vertical"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/logoPreview"
-                    android:layout_width="20dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_pdf"/>
+                android:layout_height="45dp"
+                android:background="@drawable/bg_edit_text"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:hint="Masukkan nama judul E-Book"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi E-Book"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/edDeskripsi"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_edit_text"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/hint"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:hint="Masukkan nama judul E-Book"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unggah E-Book"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+            <Button
+                android:id="@+id/btnUnggah"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_btn_border"
+                android:text="Unggah berkas"
+                android:textColor="@color/primay"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:drawableStart="@drawable/ic_upload"
+                android:drawableTint="@color/primay"
+                android:drawablePadding="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/parentPratinjau"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <TextView
-                    android:id="@+id/textPdf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="surat laporan motor hilang.pdf"
+                    android:text="Pratinjau"
                     android:fontFamily="@font/lato_regular"
                     android:textSize="12sp"
                     android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/logoPreview"
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_pdf"/>
+                    <TextView
+                        android:id="@+id/textPdf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="surat laporan motor hilang.pdf"
+                        android:fontFamily="@font/lato_regular"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:visibility="invisible"
-                android:indeterminateTint="@color/primay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"/>
-            <Button
-                android:id="@+id/btnTambahkan"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_btn"
-                android:layout_alignParentBottom="true"
-                android:text="Tambahkan"
-                android:textColor="@color/white"
-                android:fontFamily="@font/lato_bold"
-                android:textSize="14sp"
-                android:textAllCaps="false"/>
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_height="match_parent">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:visibility="invisible"
+                    android:indeterminateTint="@color/primay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"/>
+                <Button
+                    android:id="@+id/btnTambahkan"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_btn"
+                    android:layout_alignParentBottom="true"
+                    android:text="Tambahkan"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>

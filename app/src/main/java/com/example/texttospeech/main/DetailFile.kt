@@ -67,6 +67,9 @@ class DetailFile : AppCompatActivity() {
         binding.btnTextSpeech.setOnClickListener {
             val intent = Intent(this, TextToSpeech::class.java)
             intent.putExtra("file_path", getFilePath)
+            intent.putExtra("judul", getJudul)
+            intent.putExtra("deskripsi", getDeskripsi)
+            intent.putExtra("id", getId)
             startActivity(intent)
         }
         binding.backActivity.setOnClickListener {

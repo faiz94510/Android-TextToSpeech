@@ -113,11 +113,12 @@ class Login : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.putExtra("intent", "main_activity")
         startActivity(intent)
         finish()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        super.onBackPressed()
     }
 }

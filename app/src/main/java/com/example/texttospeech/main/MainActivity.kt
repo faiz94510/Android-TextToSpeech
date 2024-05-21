@@ -27,7 +27,14 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         StatusBarColor().InitializationBarColorWithoutStatusBar(this)
-        replaceFragment(HomeFragment())
+        val getIntent = intent.getStringExtra("intent")?:""
+        if (getIntent.equals("main_activity")){
+            replaceFragment(ProfileFragment())
+            binding.bottomNav.selectedItemId = R.id.profileFragment
+        }else{
+            replaceFragment(HomeFragment())
+            binding.bottomNav.selectedItemId = R.id.homeFragment
+        }
         binding.bottomNav.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.homeFragment -> replaceFragment(HomeFragment())
@@ -51,7 +58,7 @@ class MainActivity : AppCompatActivity(){
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragment = fragmentManager.findFragmentById(R.id.fragmentContainer)
 
-        if (fragment is HomeFragment) {
+        if (fragment is HomeFragment || fragment is ProfileFragment) {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed()
                 return

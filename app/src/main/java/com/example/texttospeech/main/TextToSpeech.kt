@@ -38,6 +38,10 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
     var getBahasa : String = ""
     var getWarnaText : Int = 0
     var getWarnaHilight : Int = 0
+    var getId : String = ""
+    var getFilePath : String = ""
+    var getJudul : String = ""
+    var getDeskripsi : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,10 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
         textToSpeech = TextToSpeech(this, this)
         getDatasharedPreferences()
 
+        getId = intent.getStringExtra("id")?:""
+        getFilePath = intent.getStringExtra("file_path") ?:""
+        getJudul = intent.getStringExtra("judul") ?:""
+        getDeskripsi = intent.getStringExtra("deskripsi")?:""
         val getFilePath = intent.getStringExtra("file_path")?:""
         val getExtension = getFilePath.substringAfterLast(".")
         if (getExtension.equals("pdf")){
@@ -100,6 +108,10 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
                 textToSpeech.stop()
             }
             textToSpeech.shutdown()
+            onBackPressed()
+        }
+
+        binding.backActivity.setOnClickListener {
             onBackPressed()
         }
     }
@@ -199,5 +211,17 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
         textToSpeech.shutdown()
         super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, DetailFile::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.putExtra("file_path", getFilePath)
+        intent.putExtra("judul", getJudul)
+        intent.putExtra("deskripsi", getDeskripsi)
+        intent.putExtra("id", getId)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        super.onBackPressed()
     }
 }
