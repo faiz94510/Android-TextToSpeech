@@ -22,13 +22,19 @@ class SettingsTextToSpeech : AppCompatActivity() {
     var getBahasa : String = ""
     var getWarnaText : Int = 0
     var getWarnaHilight : Int = 0
+    var getId : String = ""
     var getFilePath : String = ""
+    var getJudul : String = ""
+    var getDeskripsi : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
         StatusBarColor().InitializationBarColorWithoutStatusBar(this)
-        getFilePath = intent.getStringExtra("file_path")?:""
+        getId = intent.getStringExtra("id")?:""
+        getFilePath = intent.getStringExtra("file_path") ?:""
+        getJudul = intent.getStringExtra("judul") ?:""
+        getDeskripsi = intent.getStringExtra("deskripsi")?:""
         getDatasharedPreferences()
 
 
@@ -40,7 +46,7 @@ class SettingsTextToSpeech : AppCompatActivity() {
                 override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
 
                     getWarnaText = color
-                    binding.viewWarnaText.setBackgroundColor(getWarnaText)
+                    binding.viewWarnaText.backgroundTintList = ColorStateList.valueOf(getWarnaText)
                     val editor = sharedPreferences.edit()
                     editor.putInt("warna_text", getWarnaText)
                     editor.apply()
@@ -58,7 +64,7 @@ class SettingsTextToSpeech : AppCompatActivity() {
                 override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
 
                     getWarnaHilight = color
-                    binding.viewWarnaHilight.setBackgroundColor(getWarnaHilight)
+                    binding.viewWarnaHilight.backgroundTintList = ColorStateList.valueOf(getWarnaHilight)
                     val editor = sharedPreferences.edit()
                     editor.putInt("warna_hilight", getWarnaHilight)
                     editor.apply()
@@ -88,6 +94,9 @@ class SettingsTextToSpeech : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(this, TextToSpeech::class.java)
         intent.putExtra("file_path", getFilePath)
+        intent.putExtra("judul", getJudul)
+        intent.putExtra("deskripsi", getDeskripsi)
+        intent.putExtra("id", getId)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)

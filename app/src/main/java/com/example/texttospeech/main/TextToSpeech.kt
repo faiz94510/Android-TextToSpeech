@@ -96,6 +96,9 @@ class TextToSpeech : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.btnSettings.setOnClickListener {
             val intent = Intent(this, SettingsTextToSpeech::class.java)
             intent.putExtra("file_path", getFilePath)
+            intent.putExtra("judul", getJudul)
+            intent.putExtra("deskripsi", getDeskripsi)
+            intent.putExtra("id", getId)
             startActivity(intent)
             if (textToSpeech.isSpeaking) {
                 textToSpeech.stop()
