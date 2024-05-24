@@ -134,7 +134,7 @@ class AddFile : AppCompatActivity() {
         try {
             val fileExtension = getFileExtensionFromUri(context, uri)
             val fileName = "file_${System.currentTimeMillis()}.$fileExtension"
-            val outputDir = context.cacheDir // Anda bisa menggunakan lokasi penyimpanan yang sesuai dengan kebutuhan Anda
+            val outputDir = context.filesDir // Anda bisa menggunakan lokasi penyimpanan yang sesuai dengan kebutuhan Anda
             val outputFile = File(outputDir, fileName)
 
             inputStream = context.contentResolver.openInputStream(uri)

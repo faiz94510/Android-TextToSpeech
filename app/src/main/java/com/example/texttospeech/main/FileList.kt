@@ -79,6 +79,7 @@ class FileList : AppCompatActivity() {
 
             withContext(Dispatchers.IO) {
                 val getData = db.fileDao().getAllFileByCurrent()
+                Log.d("faiz nazhir", getData.toString())
 
 
                 for (file in getData) {

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -185,6 +186,7 @@ class DetailFile : AppCompatActivity() {
         getJudul = intent.getStringExtra("judul") ?:""
         getDeskripsi = intent.getStringExtra("deskripsi")?:""
 
+
         binding.judul.text = getJudul
         binding.deskripsi.text = getDeskripsi
 
@@ -194,6 +196,7 @@ class DetailFile : AppCompatActivity() {
             val pdfRenderer = pdfRendererHelper.openPdf(File(getFilePath))
             pdfRendererHelper.displayPage(0, binding.imageCover)
             pdfRendererHelper.closePdf()
+            Log.d("faiz nazhir","Masuk sini")
         }else if(getFilePath.substringAfterLast(".").equals("txt")){
             binding.imageCover.setImageResource(R.drawable.notepad_logo)
         }else{
