@@ -72,7 +72,7 @@ class Register : AppCompatActivity() {
         }catch ( e: JSONException){
             e.printStackTrace()
         }
-        AndroidNetworking.post("$url/auth/login")
+        AndroidNetworking.post("$url/auth/register")
             .addJSONObjectBody(jsonObject)
             .addHeaders("Content-Type", "application/json")
             .setPriority(Priority.MEDIUM)

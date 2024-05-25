@@ -66,14 +66,12 @@ class DetailFile : AppCompatActivity() {
         }
 
         binding.btnTextSpeech.setOnClickListener {
-            if (getFilePath.isNotEmpty() && getJudul.isNotEmpty() && getDeskripsi.isEmpty() && getId.isNotEmpty()){
-                val intent = Intent(this, TextToSpeech::class.java)
-                intent.putExtra("file_path", getFilePath)
-                intent.putExtra("judul", getJudul)
-                intent.putExtra("deskripsi", getDeskripsi)
-                intent.putExtra("id", getId)
-                startActivity(intent)
-            }
+            val intent = Intent(this, TextToSpeech::class.java)
+            intent.putExtra("file_path", getFilePath)
+            intent.putExtra("judul", getJudul)
+            intent.putExtra("deskripsi", getDeskripsi)
+            intent.putExtra("id", getId)
+            startActivity(intent)
         }
         binding.backActivity.setOnClickListener {
             onBackPressed()
